@@ -1,5 +1,6 @@
 // El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
 let amigos = []; //declaracion del arreglo
+console.log(amigos.length);
 document.querySelector('#amigo').focus();
 
 function reiniciar(){ //esta función limpia el textbox para ingresar un nombre
@@ -25,13 +26,26 @@ if(amigo == ''){
     if(validarNombre(amigo) == false){
         alert('No se permite valores numéricos en un nombre');
         reiniciar();
-    }else{
-        amigos.push(amigo);
-        console.log(amigos);
-        reiniciar();
+    }else {
+        if(amigos.includes(amigo)){
+            alert('el nombre esta duplicado, ingrese otro diferente');
+            reiniciar();
+        }else{
+            amigos.push(amigo);
+             listaAmigos();
+            reiniciar();
+        }
     }
-    
-
-}
+   }
 }
 
+function listaAmigos(){
+   let lista = document.getElementById("listaAmigos");
+   lista.innerHTML = "";
+    for (let index = 0; index < amigos.length; index++) {
+        let li =document.createElement('li');
+                li.innerHTML = amigos[index];
+        lista.appendChild(li);
+    }
+    return;
+}
