@@ -1,7 +1,8 @@
 // El principal objetivo de este desafío es fortalecer tus habilidades en lógica de programación. Aquí deberás desarrollar la lógica para resolver el problema.
-let amigos = []; //declaracion del arreglo
-console.log(amigos.length);
-document.querySelector('#amigo').focus();
+let amigos = []; //declaracion del arreglo de amigos
+let amigoSorteado = []; //declaro arreglo de amigos ya elegidos
+let amigoSecreto;
+document.querySelector('#amigo').focus();//al usar esta instrucción el focus deja el cursor en el textbox
 
 function reiniciar(){ //esta función limpia el textbox para ingresar un nombre
     document.querySelector('#amigo').value = '';
@@ -19,7 +20,6 @@ function validarNombre(parametro) { //funcion que permite validar solo ingreso d
 
 function agregarAmigo(){
 let amigo = document.querySelector('#amigo').value;
-console.log(typeof(amigo));
 if(amigo == ''){
     alert('Por favor, debes igresar un nombre');
 }else{
@@ -37,6 +37,7 @@ if(amigo == ''){
         }
     }
    }
+   return;
 }
 
 function listaAmigos(){
@@ -49,3 +50,37 @@ function listaAmigos(){
     }
     return;
 }
+
+function sortearAmigo(){
+   let numeroDeIndex = Math.floor(Math.random()*amigos.length);
+   console.log(numeroDeIndex);
+   amigoSecreto = amigos[numeroDeIndex];
+   console.log(amigos);
+
+   if(amigos.length == 0){
+        alert('No hay ingresado ningún amigo para sortear');
+        reiniciar();
+    }else{
+        if(numeroDeIndex > amigos.length){
+            sortearAmigo();
+        }else{
+            if(amigoSorteado.length === amigos.length){
+                document.getElementById('listaAmigos').innerHTML = 'TODOS LOS AMIGOS FUERON SORTEADOS';
+                document.querySelector('#resultado').innerHTML = 'FIN DEL SORTEO';
+                document.querySelector('#sorteo').setAttribute('disabled','true');
+            }else {
+                if(amigoSorteado.includes(amigoSecreto)){
+                    sortearAmigo();
+                }else {
+                    let ganador = document.getElementById("resultado");
+                    amigoSorteado.push(amigoSecreto);
+                    console.log(amigoSorteado);
+                    document.getElementById('listaAmigos').innerHTML = ''; //elimina la lista dispuesta en el html
+                    ganador.innerHTML = `Tú amigo secreto es : ${amigoSecreto}`;
+                } 
+            }
+        }
+   }
+   return;
+}
+
